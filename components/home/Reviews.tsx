@@ -9,7 +9,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Stars } from "@/components/ui/Stars";
-import { reviewHighlights } from "@/lib/content";
+import { reviewHighlights, site } from "@/lib/content";
 import type { GoogleReview } from "@/lib/google-reviews";
 import { cn } from "@/lib/utils";
 
@@ -218,13 +218,19 @@ export function Reviews({ live, rating, count, googleUrl }: { live: GoogleReview
 
       <Reveal className="container-x mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
         <a
-          href={googleUrl}
+          href={site.googleReviewUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="font-display text-lg font-bold underline decoration-tangerine decoration-[3px] underline-offset-[6px] hover:decoration-ink"
+          className="border-hard group inline-flex h-14 items-center gap-3 rounded-full bg-tangerine px-6 font-display text-lg font-bold text-ink shadow-hard-sm transition-transform hover:-translate-y-0.5"
         >
-          Read all {count} reviews on Google<span className="sr-only"> (opens in a new tab)</span>
+          <span className="grid size-8 place-items-center rounded-full bg-white">
+            <GoogleG className="size-5" />
+          </span>
+          Review us on Google
+          <ArrowUpRight className="size-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden />
+          <span className="sr-only"> (opens in a new tab)</span>
         </a>
+        <p className="text-muted text-sm">Happy with your yard? A quick review helps other El Paso pet parents find us.</p>
       </Reveal>
     </Section>
   );

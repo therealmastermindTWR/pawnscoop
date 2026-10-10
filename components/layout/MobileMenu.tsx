@@ -15,7 +15,6 @@ const links = [
   { label: "Home", href: "/" },
   { label: "Services", href: "/services" },
   { label: "Service Areas", href: "/locations" },
-  { label: "Refer a Friend", href: "/refer-a-friend" },
   ...nav.main,
 ];
 

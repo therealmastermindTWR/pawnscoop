@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { PawIcon } from "@/components/ui/Icons";
 import { ScrollTrigger } from "@/lib/gsap";
 import { useLenis } from "./SmoothScroll";
@@ -22,7 +22,17 @@ export function PageTransition({ children }: { children: ReactNode }) {
   const reduce = useReducedMotion();
   const [phase, setPhase] = useState<Phase>("idle");
   const pending = useRef<string | null>(null);
+  const navigating = useRef(false);
   const lastPath = useRef(pathname);
+
+  /** Jump (no animation) to the top of the new page, or to the #hash target if the link had one. */
+  const settle = useCallback(() => {
+    const hash = window.location.hash;
+    const target = hash ? document.getElementById(decodeURIComponent(hash.slice(1))) : null;
+    const y = target ? Math.max(0, target.getBoundingClientRect().top + window.scrollY - 110) : 0;
+    lenis?.scrollTo(y, { immediate: true, force: true });
+    window.scrollTo(0, y);
+  }, [lenis]);
 
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
@@ -38,28 +48,45 @@ export function PageTransition({ children }: { children: ReactNode }) {
         return;
       }
       pending.current = href;
+      navigating.current = true;
+      // Freeze scrolling for the whole transition so leftover wheel/trackpad momentum
+      // can't scroll the new page away from the top.
+      lenis?.stop();
       router.prefetch(url.pathname);
       setPhase("cover");
     };
     document.addEventListener("click", onClick, true);
     return () => document.removeEventListener("click", onClick, true);
-  }, [router, reduce]);
+  }, [router, reduce, lenis]);
 
-  // New route rendered → jump to top and lift the curtain.
+  // New route rendered → jump to the top (or #hash) and lift the curtain.
+  // Back/forward navigation is left alone so the browser can restore the previous position.
   useEffect(() => {
     if (pathname === lastPath.current) return;
     lastPath.current = pathname;
-    lenis?.scrollTo(0, { immediate: true, force: true });
-    window.scrollTo(0, 0);
-    requestAnimationFrame(() => ScrollTrigger.refresh());
+    if (!navigating.current) return;
+    settle();
+    requestAnimationFrame(() => {
+      ScrollTrigger.refresh();
+      settle();
+    });
     setPhase((p) => (p === "cover" ? "reveal" : p));
-  }, [pathname, lenis]);
+  }, [pathname, settle]);
 
   const onCovered = () => {
     if (phase === "cover" && pending.current) {
       router.push(pending.current, { scroll: false });
       pending.current = null;
+      // Safety net: never leave the curtain (or a frozen page) up if navigation stalls.
+      window.setTimeout(() => setPhase((p) => (p === "cover" ? "reveal" : p)), 8000);
     }
+  };
+
+  const onRevealed = () => {
+    settle();
+    navigating.current = false;
+    lenis?.start();
+    setPhase("idle");
   };
 
   return (
@@ -79,7 +106,7 @@ export function PageTransition({ children }: { children: ReactNode }) {
               initial={{ y: "100%" }}
               animate={{ y: phase === "cover" ? "0%" : "-100%" }}
               transition={{ duration: 0.55, ease: EASE, delay: phase === "cover" ? 0.1 : 0 }}
-              onAnimationComplete={() => (phase === "cover" ? onCovered() : setPhase("idle"))}
+              onAnimationComplete={() => (phase === "cover" ? onCovered() : onRevealed())}
             >
               <motion.div
                 initial={{ scale: 0.4, rotate: -30, opacity: 0 }}

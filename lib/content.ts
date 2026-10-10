@@ -48,6 +48,8 @@ export const site = {
   clientLoginUrl: "https://clienthub.getjobber.com/client_hubs/7636455e-e014-4aed-be1d-7d87f94a72cb/login/new",
   /** Google Business Profile (reviews, directions). */
   googleProfileUrl: "https://share.google/PYkCAC34ZfXHy9eJH",
+  /** Opens Google's "write a review" box for Paw N Scoop. */
+  googleReviewUrl: "https://g.page/r/CXesWgpcQ8vGEAE/review",
   /** YouTube/Vimeo *embed* URL. The "Watch how it works" button only appears when this is set. */
   videoUrl: "",
   /**
@@ -403,6 +405,7 @@ export const nav = {
     { label: "FAQ", href: "/faq" },
     { label: "About", href: "/about" },
     { label: "Contact", href: "/contact" },
+    { label: "Refer a Friend", href: "/refer-a-friend" },
   ],
 };
 

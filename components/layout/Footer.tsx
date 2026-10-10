@@ -22,7 +22,7 @@ const columns: { title: string; links: FooterLink[] }[] = [
       { label: "FAQ", href: "/faq" },
       { label: "Contact", href: "/contact" },
       { label: "Refer a Friend", href: "/refer-a-friend" },
-      { label: "Google Reviews", href: site.googleProfileUrl, external: true },
+      { label: "Review Us on Google", href: site.googleReviewUrl, external: true },
       { label: "Client Login", href: site.clientLoginUrl, external: true },
     ],
   },
