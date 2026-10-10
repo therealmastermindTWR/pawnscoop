@@ -3,9 +3,13 @@
  *  PAW N SCOOP: SITE CONTENT
  * ============================================================================
  *  All marketing copy and data lives here so it is easy to edit.
- *  Business facts come from the Paw N Scoop Google Business Profile
- *  ("PawNScoop Lawn Care") and pawnscoop.com. Anything marked `PLACEHOLDER`
- *  still needs real info (see README.md for the checklist).
+ *
+ *  Sources for business facts (keep this file in sync with them):
+ *   - Google Business Profile "PawNScoop Lawn Care" (rating, hours, phone, address)
+ *   - Jobber request form (services, plan names, prices, what's included)
+ *   - pawnscoop.com (guarantees, first-scoop offer, customer portal)
+ *
+ *  `CONFIRM:` comments mark details the owner should double-check.
  * ============================================================================
  */
 
@@ -13,12 +17,15 @@ export type Theme = "white" | "yellow" | "black";
 
 export const site = {
   name: "Paw N Scoop",
-  legalName: "Paw N Scoop", // PLACEHOLDER: registered legal name (e.g. "Paw N Scoop LLC")
+  legalName: "Paw N Scoop", // CONFIRM: registered legal name (e.g. "Paw N Scoop LLC")
   /** Official slogan. */
   tagline: "Pawsome Yards N Splendid Scoops",
   description:
-    "Paw N Scoop is a locally owned El Paso pet waste removal company. Weekly, bi-weekly, monthly and one-time poop scooping, lawn care and yard work, and professional artificial turf cleaning across El Paso County. Your first scoop is free.",
-  serviceArea: "El Paso County, TX",
+    "Paw N Scoop provides poop scooping, artificial turf cleaning, lawn care, yard cleanups and deodorizing in El Paso, TX and surrounding areas. Get a free quote!",
+  /** Short footer / about blurb. */
+  blurb:
+    "Locally owned outdoor cleaning and yard care in El Paso, TX. Poop scooping, artificial turf cleaning, lawn care, yard cleanups and deodorizing, all from one friendly crew.",
+  serviceArea: "El Paso, TX and surrounding areas throughout El Paso County",
   url: "https://www.pawnscoop.com",
   phone: "(915) 666-7272",
   phoneHref: "tel:+19156667272",
@@ -31,23 +38,23 @@ export const site = {
     country: "US",
   },
   geo: { lat: 31.8120519, lng: -106.390015 }, // from the Google Business Profile
-  // Google Business Profile hours: open every day 6:30 AM – 6:30 PM.
+  // Hours confirmed by the owner: every day 7:30 AM – 6:30 PM. (Update the Google Business Profile to match; it says 6:30 AM.)
   hours: [
-    { days: "Every day", time: "6:30am – 6:30pm" },
-    { days: "Online booking", time: "24/7" },
+    { days: "Every day", time: "7:30am – 6:30pm" },
+    { days: "Online quote requests", time: "24/7" },
   ],
-  /** Jobber request form. Every "Free Quote" / booking CTA on the site opens this in a new tab. */
+  /** Jobber request form. Every "Free Quote" CTA opens this in a new tab. Customers pick one or more services there. */
   bookingUrl: "https://clienthub.getjobber.com/hubs/7636455e-e014-4aed-be1d-7d87f94a72cb/public/requests/4599926/new",
-  clientLoginUrl: "https://clienthub.getjobber.com/client_hubs/7636455e-e014-4aed-be1d-7d87f94a72cb/login/new", // Jobber Client Hub login
+  clientLoginUrl: "https://clienthub.getjobber.com/client_hubs/7636455e-e014-4aed-be1d-7d87f94a72cb/login/new",
   /** Google Business Profile (reviews, directions). */
   googleProfileUrl: "https://share.google/PYkCAC34ZfXHy9eJH",
-  videoUrl: "", // PLACEHOLDER: YouTube/Vimeo *embed* URL for "Watch how it works"
-  priceFrom: "$20", // starting price per visit
-  social: [
-    { label: "Facebook", href: "https://facebook.com/", icon: "facebook" }, // PLACEHOLDER
-    { label: "Instagram", href: "https://instagram.com/", icon: "instagram" }, // PLACEHOLDER
-    { label: "TikTok", href: "https://tiktok.com/", icon: "tiktok" }, // PLACEHOLDER
-  ] as const,
+  /** YouTube/Vimeo *embed* URL. The "Watch how it works" button only appears when this is set. */
+  videoUrl: "",
+  /**
+   * Social profiles. Only links listed here are shown. Add real profile URLs, e.g.
+   * { label: "Facebook", href: "https://facebook.com/yourpage", icon: "facebook" }
+   */
+  social: [] as { label: string; href: string; icon: "facebook" | "instagram" | "tiktok" }[],
 };
 
 /** Real numbers from the Google Business Profile. Update as reviews come in. */
@@ -75,41 +82,448 @@ export const reviewHighlights = [
   { icon: "trophy", title: "Customers for years", body: "Some of our clients have trusted us with their yards for two years and counting." },
 ];
 
+/** First-scoop offer, as stated on pawnscoop.com. Applies to recurring poop-scooping plans only. */
 export const promo = {
-  code: "FIRSTSCOOP", // PLACEHOLDER: confirm or change the code customers should mention
+  short: "Free first scoop with a weekly, bi-weekly or monthly plan",
   headline: "Your first scoop is on us.",
-  body: "Sign up for weekly, bi-weekly or monthly service and your first scoop is free. No catch, no contract, just a clean yard.",
-  referralCredit: "$25", // PLACEHOLDER: confirm your referral reward
-};
-
-export const nav = {
-  services: [
-    { label: "Residential", href: "/residential", blurb: "Recurring & one-time poop scooping" },
-    { label: "Commercial", href: "/commercial", blurb: "Pet areas for HOAs & apartments" },
-    { label: "Lawn Care", href: "/lawn-care", blurb: "Mowing, trimming & yard work" },
-    { label: "Turf Cleaning", href: "/turf-cleaning", blurb: "Deodorize & disinfect artificial turf" },
-  ],
-  main: [
-    { label: "Refer a Friend", href: "/refer-a-friend" },
-    { label: "FAQ", href: "/faq" },
-    { label: "About", href: "/about" },
-  ],
+  eligibility:
+    "Free first scoop applies to new weekly, bi-weekly and monthly poop-scooping plans. One-time cleanups, turf cleaning, lawn care, yard cleanups and deodorizing are quoted separately.", // CONFIRM: "new" customers only?
 };
 
 export const hero = {
-  headlineLines: ["Less poop.", "More play."],
-  sub: "El Paso's locally owned pet waste removal crew. We scoop your yard weekly, bi-weekly or monthly, double-check your gate and send a photo, so your yard stays clean, safe and barefoot-ready.",
+  headlineLines: ["Cleaner Yards.", "Happier Homes."],
+  subtitle: "Complete Outdoor Cleaning & Yard Care in El Paso, TX",
+  description:
+    "Paw N Scoop keeps outdoor spaces clean, fresh, and ready to enjoy. From professional pet waste removal and artificial turf cleaning to lawn care, yard cleanups, and deodorizing, we've got your yard covered. Proudly serving El Paso, TX and surrounding areas throughout El Paso County.",
 };
 
-export const marqueeWords = ["Pawsome Yards", "Splendid Scoops", "Scoop", "Sanitize", "Smile", "Happy Paws"];
+export const marqueeWords = ["Poop Scooping", "Turf Cleaning", "Lawn Care", "Yard Cleanups", "Deodorizing", "Pawsome Yards", "Splendid Scoops"];
 
-/** Real customer yard (El Paso) before and after a Paw N Scoop cleanup. */
-export const beforeAfter = {
-  caption: "A real El Paso backyard, before and after a Paw N Scoop cleanup. Drag the slider to see the difference.",
-  before: { src: "/images/before.jpg", alt: "Before: gravel backyard covered in dog waste" },
-  after: { src: "/images/after.jpg", alt: "After: the same gravel backyard, completely cleaned up by Paw N Scoop" },
+/* ---------------------------------------------------------------------------
+ * SERVICES
+ * ------------------------------------------------------------------------- */
+
+export type ServiceSlug = "poop-scooping" | "artificial-turf-cleaning" | "lawn-care" | "yard-cleanup" | "disinfecting-deodorizing";
+export type ServiceIcon = "shovel" | "sprout" | "scissors" | "leaf" | "spray";
+
+export type Service = {
+  slug: ServiceSlug;
+  name: string;
+  /** One-line summary for cards and menus. */
+  summary: string;
+  icon: ServiceIcon;
+  /** Real Paw N Scoop photo for the service card. Leave undefined until you have one (an illustrated panel shows instead). */
+  image?: { src: string; alt: string };
+  seo: { title: string; description: string };
+  h1: string;
+  intro: string;
+  overview: string[];
+  includes: string[];
+  benefits: { title: string; body: string }[];
+  process: { title: string; body: string }[];
+  faqs: { q: string; a: string }[];
+  /** Prices exactly as listed on the Jobber request form. */
+  pricing?: { name: string; price: string; detail: string }[];
+  /** Matches `transformations[].category` to show before & after photos on the page. */
+  galleryCategory?: TransformationCategory;
+  mascot: "waving" | "sniffing" | "scooper" | "celebrating";
 };
 
+export const services: Service[] = [
+  {
+    slug: "poop-scooping",
+    name: "Dog Poop Scooping",
+    summary: "Weekly, bi-weekly, monthly and one-time pet waste removal for El Paso homes.",
+    icon: "shovel",
+    image: { src: "/images/after.jpg", alt: "Gravel backyard in El Paso after a Paw N Scoop pet waste cleanup" },
+    seo: {
+      title: "Poop Scooping & Dog Poop Removal in El Paso, TX",
+      description:
+        "Weekly, bi-weekly, monthly and one-time dog poop removal in El Paso, TX. Gate checked every visit and your first scoop free on recurring plans. Free quote.",
+    },
+    h1: "Dog Poop Scooping in El Paso, TX",
+    intro:
+      "Paw N Scoop is El Paso's locally owned pet waste removal crew. We pick up the dog poop in your yard on a schedule that fits your life, so your family and pets can enjoy the yard again.",
+    overview: [
+      "Choose a recurring plan and we'll come by every week, every two weeks or once a month to remove all the pet waste in your yard. Every visit includes a quick yard inspection and a secure gate check before we leave.",
+      "Yard got out of hand? Our one-time Platinum Rescue cleanup resets an overwhelmed yard in a single visit. It's perfect before a party, after a busy stretch, or for a move-in or move-out.",
+    ],
+    includes: [
+      "Complete pet waste removal",
+      "Yard inspection every visit",
+      "Secure gate check + photo confirmation",
+      "Weekly, bi-weekly or monthly plans",
+      "One-time cleanups for overwhelmed yards",
+      "Pet-friendly crew",
+    ],
+    benefits: [
+      { title: "Get your weekends back", body: "No more poop patrol. We handle the dirtiest yard chore so you don't have to." },
+      { title: "A yard you can actually use", body: "Kids can play, pets can run and guests can walk across the yard without watching their step." },
+      { title: "Peace of mind at the gate", body: "Our Gate Security Guarantee: we double-check every gate and send a photo after each visit." },
+      { title: "Satisfaction guaranteed", body: "Not happy with a visit? Tell us within 24 hours and we'll come back and make it right at no extra cost." },
+    ],
+    process: [
+      { title: "Pick your plan", body: "Request a free quote online and choose weekly, bi-weekly, monthly or a one-time cleanup." },
+      { title: "We confirm & schedule", body: "We confirm your quote and set your service day. You'll get automatic reminders before visits." },
+      { title: "We scoop the whole yard", body: "We remove all the pet waste, inspect the yard and double-check your gate." },
+      { title: "Photo confirmation", body: "You get a photo of your closed gate, and your yard is ready to enjoy." },
+    ],
+    pricing: [
+      { name: "Weekly Deluxe", price: "$25/week", detail: "Our signature weekly visit for busy pet homes." },
+      { name: "Bi-Weekly Elite", price: "$42/visit", detail: "Dependable visits every two weeks." },
+      { name: "Monthly Prestige", price: "$75/visit", detail: "A professional monthly cleanup for lighter needs." },
+      { name: "Platinum Rescue", price: "From $55", detail: "One-time cleanup for overwhelmed yards, events and move-ins/move-outs." },
+    ],
+    faqs: [
+      { q: "How often should I schedule poop scooping?", a: "Weekly service is the most popular for busy pet homes. Bi-weekly works well for many households, and monthly is a good fit for homes with lighter needs. Not sure? Request a quote and we'll help you pick." },
+      { q: "Do you offer one-time dog poop cleanups?", a: "Yes. Our Platinum Rescue is a one-time cleanup starting at $55, great for overwhelmed yards, events and move-ins or move-outs." },
+      { q: "Is my first scoop really free?", a: "Yes, when you sign up for a weekly, bi-weekly or monthly poop-scooping plan, your first scoop is on us." },
+      { q: "Will you close my gate when you leave?", a: "Always. Our Gate Security Guarantee means we double-check every gate before we leave and send you a photo confirmation after each visit." },
+    ],
+    galleryCategory: "Pet Waste Removal",
+    mascot: "scooper",
+  },
+  {
+    slug: "artificial-turf-cleaning",
+    name: "Artificial Turf Cleaning",
+    summary: "Deep brushing, pet residue removal, sanitizing and deodorizing for artificial grass.",
+    icon: "sprout",
+    seo: {
+      title: "Artificial Turf & Grass Cleaning in El Paso, TX",
+      description:
+        "Artificial grass cleaning in El Paso, TX: deep turf brushing, pet waste residue removal, sanitizing and deodorizing with pet and family safe products.",
+    },
+    h1: "Artificial Turf Cleaning in El Paso, TX",
+    intro:
+      "Artificial grass is low-maintenance, not no-maintenance. Between pets, play and El Paso's heat, residue and odors build up in turf over time. Our professional turf cleaning brings it back to fresh.",
+    overview: [
+      "We use commercial cleaning equipment to deep-brush your turf, lift matted fibers and remove pet waste residue that gets trapped between the blades.",
+      "Then we apply a professional sanitizing and deodorizing treatment using turf-safe, pet and family safe products to knock out odors and bacteria. If weeds have crept in around the edges, we treat those too.",
+    ],
+    includes: [
+      "Deep turf brushing",
+      "Pet waste residue removal",
+      "Professional sanitizing treatment",
+      "Turf deodorizing",
+      "Weed treatment (if needed)",
+      "Artificial grass refresh",
+      "Pet & family safe products",
+    ],
+    benefits: [
+      { title: "Fresher-smelling turf", body: "Deodorizing goes after the source of pet odors instead of masking them." },
+      { title: "A cleaner play area", body: "Sanitizing treatment helps eliminate bacteria where your kids and pets spend time." },
+      { title: "Turf that looks newer", body: "Deep brushing lifts flattened fibers so your artificial grass looks fuller again." },
+      { title: "Safe for the whole family", body: "We use turf-safe, pet and family safe products." },
+    ],
+    process: [
+      { title: "Clear the surface", body: "We remove pet waste and loose debris so the cleaning can reach the turf itself." },
+      { title: "Deep brush", body: "Commercial equipment brushes the turf to lift fibers and loosen trapped residue." },
+      { title: "Sanitize & deodorize", body: "We apply a professional sanitizing and deodorizing treatment with turf-safe products." },
+      { title: "Weed treatment & refresh", body: "Weeds are treated if needed and your turf gets a final refresh." },
+    ],
+    faqs: [
+      { q: "How often should artificial turf be cleaned?", a: "It depends on how many pets use your turf and how much sun and traffic it gets. Request a quote and we'll recommend a schedule for your yard." },
+      { q: "Are your turf cleaning products safe for pets?", a: "Yes. We use turf-safe products that are pet and family safe." },
+      { q: "Can you get rid of pet urine smell in artificial grass?", a: "Our sanitizing and deodorizing treatment is designed to eliminate pet odors at the source, not just cover them up." },
+      { q: "Do you also pick up dog poop on artificial turf?", a: "Yes. Pet waste residue removal is part of every turf cleaning, and you can add a recurring poop-scooping plan to keep it clean between deep cleans." },
+    ],
+    galleryCategory: "Artificial Turf Cleaning",
+    mascot: "sniffing",
+  },
+  {
+    slug: "lawn-care",
+    name: "Lawn Care",
+    summary: "Lawn mowing, grass edging and trimming to keep your lawn neat and healthy-looking.",
+    icon: "scissors",
+    seo: {
+      title: "Lawn Care & Lawn Mowing in El Paso, TX",
+      description:
+        "Lawn mowing, grass edging and trimming in El Paso, TX from a local, pet-friendly crew. Keep your lawn neat and tidy. Request a free lawn care quote.",
+    },
+    h1: "Lawn Care in El Paso, TX",
+    intro:
+      "A neat lawn makes the whole home look cared for. Paw N Scoop mows, edges and trims your grass so your yard looks sharp and stays ready to enjoy.",
+    overview: [
+      "We mow your lawn, edge along walkways, driveways and beds, and trim the grass we can't reach with the mower for a clean, finished look.",
+      "When we're done, we blow clippings off your walkways and driveway so nothing gets tracked inside. And because we're a pet-friendly crew, your dogs are in good hands.",
+    ],
+    includes: [
+      "Lawn mowing",
+      "Grass edging",
+      "Grass trimming",
+      "Walkway & driveway blow-off",
+      "General lawn maintenance",
+      "Pet-friendly service",
+    ],
+    benefits: [
+      { title: "Instant curb appeal", body: "Freshly mowed grass and crisp edges make your home look its best." },
+      { title: "More free time", body: "Skip the mowing, edging and cleanup. We'll take care of it." },
+      { title: "One crew for the whole yard", body: "Pair lawn care with poop scooping or a yard cleanup in the same quote request." },
+      { title: "Pet-friendly from start to finish", body: "We work around your pets with care and leave the yard tidy behind us." },
+    ],
+    process: [
+      { title: "Tell us about your lawn", body: "Request a free quote and select lawn care. Add any details about your yard." },
+      { title: "We confirm your quote", body: "We confirm pricing and schedule a time that works for you." },
+      { title: "Mow, edge & trim", body: "We mow, edge along hard surfaces and trim for a clean, even finish." },
+      { title: "Clean finish", body: "Clippings are blown off walkways and driveways before we leave." },
+    ],
+    faqs: [
+      { q: "Can I combine lawn care with poop scooping?", a: "Yes. You can select both services in the same quote request, and one local crew takes care of your whole yard." },
+      { q: "Do you offer recurring lawn care?", a: "Let us know whether you'd like a one-time service or a recurring schedule when you request your quote, and we'll confirm what's available for your yard." }, // CONFIRM: recurring lawn care availability
+      { q: "Do you trim shrubs and bushes too?", a: "Bush and shrub trimming is part of our yard cleanup service. Just add it to your request." },
+    ],
+    galleryCategory: "Lawn Care",
+    mascot: "waving",
+  },
+  {
+    slug: "yard-cleanup",
+    name: "Yard Cleanups",
+    summary: "Backyard cleanups: leaves, debris, weeds, shrub trimming and light branch removal.",
+    icon: "leaf",
+    seo: {
+      title: "Yard & Backyard Cleanup Services in El Paso, TX",
+      description:
+        "Backyard cleanup in El Paso, TX: leaf and debris cleanup, weed removal, bush and shrub trimming and light branch removal. Request a free quote.",
+    },
+    h1: "Yard Cleanups in El Paso, TX",
+    intro:
+      "Whether your yard got away from you or you're getting ready for guests, a move or a new season, Paw N Scoop clears it out so your outdoor space is usable again.",
+    overview: [
+      "A yard cleanup tackles the build-up: leaves and debris, weeds, overgrown bushes and shrubs, and light branches that have come down.",
+      "We finish by blowing off your walkways and driveway, so the whole property looks clean, not just the backyard.",
+    ],
+    includes: [
+      "Leaf & debris cleanup",
+      "Weed removal (if needed)",
+      "Bush & shrub trimming",
+      "Light branch removal",
+      "Walkway & driveway blow-off",
+      "General outdoor property cleanup",
+    ],
+    benefits: [
+      { title: "Your space, back", body: "Turn an overgrown, cluttered yard into a place you want to spend time again." },
+      { title: "Ready for anything", body: "Get guest-ready for a party, list-ready for a sale or move-in ready for a new home." },
+      { title: "Safer footing", body: "Clearing debris and branches makes the yard nicer for kids and pets to run around." },
+      { title: "Done in one visit", body: "One crew handles the leaves, weeds, trimming and cleanup together." },
+    ],
+    process: [
+      { title: "Show us the yard", body: "Request a free quote and tell us what needs attention." },
+      { title: "We confirm the plan", body: "We confirm your quote and schedule your cleanup." },
+      { title: "Clear & trim", body: "We clean up leaves and debris, remove weeds and trim bushes and shrubs." },
+      { title: "Final blow-off", body: "Walkways and driveways are blown clean so the whole property looks finished." },
+    ],
+    faqs: [
+      { q: "When should I book a yard cleanup?", a: "Anytime your yard needs a reset: before a party or event, before listing or after buying a home, or when the seasons change." },
+      { q: "Do you remove weeds?", a: "Yes, weed removal is included when needed." },
+      { q: "My yard also has a lot of dog poop. Can you handle both?", a: "Absolutely. Add our one-time Platinum Rescue pet waste cleanup or a recurring poop-scooping plan to your request." },
+    ],
+    galleryCategory: "Yard Cleanups",
+    mascot: "celebrating",
+  },
+  {
+    slug: "disinfecting-deodorizing",
+    name: "Disinfecting & Deodorizing",
+    summary: "Sanitizing and odor treatments for pet areas, yards and artificial turf.",
+    icon: "spray",
+    seo: {
+      title: "Yard Deodorizing & Pet Odor Removal in El Paso, TX",
+      description:
+        "Pet odor removal and yard deodorizing in El Paso, TX. Sanitizing and deodorizing treatments for pet areas and artificial turf. Pet and family safe.",
+    },
+    h1: "Disinfecting & Deodorizing in El Paso, TX",
+    intro:
+      "Even after the poop is picked up, pet odors can linger, especially in El Paso's summer heat. Our sanitizing and deodorizing treatments go after the source of the smell so your yard stays fresh.",
+    overview: [
+      "We treat the spots your pets use most with a professional sanitizing and deodorizing treatment. It's a targeted odor treatment, separate from a full turf deep clean.",
+      "Add it to a recurring poop-scooping plan or an artificial turf cleaning to keep odors from coming back.",
+    ],
+    includes: [
+      "Outdoor odor control",
+      "Pet-related odor treatment",
+      "Artificial turf deodorizing",
+      "Sanitizing treatment for pet areas",
+      "Pet & family safe products",
+    ],
+    benefits: [
+      { title: "Enjoy your yard again", body: "Spend time outside without the lingering pet smell." },
+      { title: "Targets the source", body: "Treatments are designed to eliminate odors, not just cover them up." },
+      { title: "Cleaner pet areas", body: "Sanitizing helps knock out bacteria in the spots your pets use most." },
+      { title: "Pairs with any plan", body: "Add it to poop scooping or turf cleaning for a fresher yard all year." },
+    ],
+    process: [
+      { title: "Pick up first", body: "We remove pet waste so the treatment can work where it matters." },
+      { title: "Find the problem spots", body: "We focus on the areas your pets use most and where odors build up." },
+      { title: "Treat", body: "A sanitizing and deodorizing treatment is applied using pet and family safe products." },
+      { title: "Keep it fresh", body: "Pair with recurring scooping or turf cleaning to stop odors from coming back." },
+    ],
+    faqs: [
+      { q: "How is deodorizing different from artificial turf cleaning?", a: "Turf cleaning is a full deep clean: brushing, residue removal and treatment. Disinfecting & deodorizing is a targeted odor treatment you can add on its own or alongside other services." },
+      { q: "Is the treatment safe for my pets and kids?", a: "Yes, we use pet and family safe products." }, // CONFIRM: same products as turf cleaning; list surfaces treated (gravel, grass, patios?)
+      { q: "Can I add deodorizing to my poop-scooping plan?", a: "Yes. Select both services in your quote request and we'll put together a plan." },
+    ],
+    galleryCategory: "Outdoor Deodorizing",
+    mascot: "sniffing",
+  },
+];
+
+export const serviceHref = (slug: ServiceSlug) => `/services/${slug}`;
+
+/** Commercial properties (owner confirmed Paw N Scoop serves them). All five services are available. */
+export const commercial = {
+  seo: {
+    title: "Commercial Yard Care & Pet Waste Removal in El Paso, TX",
+    description:
+      "Pet waste removal, artificial turf cleaning, lawn care, yard cleanups and deodorizing for apartments, HOAs and businesses in El Paso, TX. Free quote.",
+  },
+  h1: "Commercial Yard Care in El Paso, TX",
+  intro:
+    "Paw N Scoop keeps shared outdoor spaces clean for apartment communities, HOAs and businesses across El Paso County, with the same five services our residential customers love.",
+  audiences: [
+    { title: "Apartment communities", body: "Dog areas, pet relief spots and shared green spaces your residents actually want to use." },
+    { title: "HOAs", body: "Common areas and community turf kept clean, fresh and ready for neighbors and their pets." },
+    { title: "Businesses", body: "Pet-friendly businesses and outdoor spaces that make a great first impression on customers." },
+  ],
+  process: [
+    { title: "Tell us about the property", body: "Request a free quote and share the property type, the areas that need attention and the services you want." },
+    { title: "We confirm scope & quote", body: "Commercial work is quoted per property. We confirm the plan, pricing and schedule with you." },
+    { title: "We get to work", body: "Our crew handles poop scooping, turf cleaning, lawn care, cleanups or deodorizing on the schedule we agree on." },
+    { title: "Satisfaction guaranteed", body: "If something isn't right, tell us within 24 hours and we'll come back and make it right at no extra cost." },
+  ],
+  faqs: [
+    { q: "Which services are available for commercial properties?", a: "All five: dog poop scooping, artificial turf cleaning, lawn care, yard cleanups, and disinfecting & deodorizing. Pick one or combine several." },
+    { q: "How is commercial service priced?", a: "Commercial work is quoted per property, based on the size of the space and the services you need. Request a free quote to get started." },
+    { q: "Can you service our property on a recurring schedule?", a: "Tell us what schedule your property needs when you request a quote, and we'll confirm availability and pricing." }, // CONFIRM: recurring commercial schedules
+  ],
+};
+
+export const nav = {
+  services: services.map((s) => ({ label: s.name, href: serviceHref(s.slug), blurb: s.summary })),
+  commercial: { label: "Commercial", href: "/commercial", blurb: "Yard care for apartments, HOAs & businesses" },
+  main: [
+    { label: "FAQ", href: "/faq" },
+    { label: "About", href: "/about" },
+    { label: "Contact", href: "/contact" },
+  ],
+};
+
+/** Homepage "How it works" (service pages use each service's own `process`). */
+export const steps = [
+  { title: "Request a Free Quote", body: "Tap any Free Quote button and pick one or more services in our quick online request form." },
+  { title: "We Confirm & Schedule", body: "We confirm your quote and set a service day that works for you, one-time or recurring." },
+  { title: "We Get to Work", body: "Our pet-friendly crew cleans, scoops, mows or treats your yard and double-checks your gate." },
+  { title: "Enjoy Your Yard", body: "Bare feet, backyard BBQs, zoomies. Your yard is officially back in business." },
+];
+
+export const features = [
+  { icon: "users", title: "Locally Owned", body: "Proudly serving El Paso and surrounding communities." },
+  { icon: "calendar", title: "Flexible Scheduling", body: "Convenient one-time and recurring service options." },
+  { icon: "paw", title: "Complete Yard Care", body: "Five outdoor cleaning and maintenance services from one local company." },
+  { icon: "file", title: "Easy Free Quotes", body: "Request a personalized estimate for your property in minutes." },
+  { icon: "badge", title: "Satisfaction Guarantee", body: "Not happy? Tell us within 24 hours and we'll make it right at no extra cost." },
+  { icon: "camera", title: "Gate Security", body: "Every gate double-checked, with a photo confirmation after each visit." },
+];
+
+/* ---------------------------------------------------------------------------
+ * BEFORE & AFTER
+ * ------------------------------------------------------------------------- */
+
+export type TransformationCategory = "Pet Waste Removal" | "Artificial Turf Cleaning" | "Lawn Care" | "Yard Cleanups" | "Outdoor Deodorizing";
+
+export type Transformation = {
+  category: TransformationCategory;
+  title: string;
+  before: { src: string; alt: string };
+  after: { src: string; alt: string };
+};
+
+/**
+ * Genuine Paw N Scoop work photos only. Categories with no photos are hidden automatically.
+ * To add more: put the photos in /public/images and add an entry below.
+ */
+export const transformations: Transformation[] = [
+  {
+    category: "Pet Waste Removal",
+    title: "Gravel backyard pet waste cleanup",
+    before: { src: "/images/before.jpg", alt: "Before: El Paso gravel backyard covered in dog waste" },
+    after: { src: "/images/after.jpg", alt: "After: the same gravel backyard, completely cleaned up by Paw N Scoop" },
+  },
+  // { category: "Artificial Turf Cleaning", title: "...", before: {...}, after: {...} },
+  // { category: "Lawn Care", ... }, { category: "Yard Cleanups", ... }, { category: "Outdoor Deodorizing", ... }
+];
+
+/* ---------------------------------------------------------------------------
+ * SERVICE AREAS
+ * ------------------------------------------------------------------------- */
+
+export type Location = {
+  slug: string;
+  city: string;
+  region: string;
+  /** position on the decorative map, 0–100 */
+  pin: { x: number; y: number };
+};
+
+// CONFIRM: only list communities Paw N Scoop actually serves.
+export const locations: Location[] = [
+  { slug: "west-el-paso", city: "West El Paso", region: "TX", pin: { x: 30, y: 40 } },
+  { slug: "northeast-el-paso", city: "Northeast El Paso", region: "TX", pin: { x: 50, y: 22 } },
+  { slug: "east-el-paso", city: "East El Paso", region: "TX", pin: { x: 62, y: 46 } },
+  { slug: "horizon-city", city: "Horizon City", region: "TX", pin: { x: 80, y: 54 } },
+  { slug: "socorro", city: "Socorro", region: "TX", pin: { x: 64, y: 66 } },
+  { slug: "canutillo", city: "Canutillo", region: "TX", pin: { x: 18, y: 18 } },
+  { slug: "san-elizario", city: "San Elizario", region: "TX", pin: { x: 72, y: 76 } },
+  { slug: "clint", city: "Clint", region: "TX", pin: { x: 84, y: 70 } },
+  { slug: "fabens", city: "Fabens", region: "TX", pin: { x: 90, y: 82 } },
+];
+
+/* ---------------------------------------------------------------------------
+ * FAQ (general; each service also has its own FAQs above)
+ * ------------------------------------------------------------------------- */
+
+export type Faq = { q: string; a: string; category: "Pricing" | "Service" | "Safety" | "Account" };
+
+export const faqs: Faq[] = [
+  { category: "Service", q: "What services does Paw N Scoop offer?", a: "We offer five outdoor services in El Paso County: dog poop scooping, artificial turf cleaning, lawn care, yard cleanups, and disinfecting & deodorizing. You can request one or several in the same quote, for homes and for commercial properties like apartments, HOAs and businesses." },
+  { category: "Pricing", q: "How much does dog poop scooping cost?", a: "Our recurring plans are Weekly Deluxe ($25/week), Bi-Weekly Elite ($42/visit) and Monthly Prestige ($75/visit). One-time Platinum Rescue cleanups start at $55. Turf cleaning, lawn care, yard cleanups and deodorizing are quoted for your property." },
+  { category: "Pricing", q: "Is the first scoop really free?", a: "Yes! When you sign up for a weekly, bi-weekly or monthly poop-scooping plan, your first scoop is on us. Other services are quoted separately." },
+  { category: "Service", q: "How often can you come?", a: "Poop scooping is available weekly, bi-weekly or monthly, plus one-time cleanups. For other services, tell us in your request whether you'd like one-time or recurring service." },
+  { category: "Safety", q: "Will you leave my gate open?", a: "Never on purpose. Our Gate Security Guarantee means we double-check every gate before we leave and send you a photo confirmation after each visit." },
+  { category: "Service", q: "What if I'm not happy with a visit?", a: "Our 100% Satisfaction Guarantee has you covered. Let us know within 24 hours and we'll come back and make it right at no extra cost." },
+  { category: "Safety", q: "What should I do with my dogs during a visit?", a: "Let us know about your pets when you request your quote, including anything we should know about their temperament, and we'll plan the visit around them." },
+  { category: "Service", q: "Do I need to be home during the visit?", a: "Usually not, as long as we can get into the yard. You'll get automatic reminders before visits and a photo of your closed gate when we're done." },
+  { category: "Service", q: "Which areas do you serve?", a: "We serve El Paso, TX and surrounding areas throughout El Paso County, including East, West and Northeast El Paso, Horizon City, Socorro, Canutillo, San Elizario, Clint and Fabens. Request a quote and we'll confirm we can reach you." },
+  { category: "Account", q: "Do you have a referral program?", a: "Yes! Refer 1 friend and get $25 off, with bigger rewards at 3, 5, 7, 10 and 25 referrals, all the way up to free scoops for life. See our Refer a Friend page for the full details and rules." },
+  { category: "Account", q: "How do I book and pay?", a: "Request a quote online in a couple of minutes. Once you're set up, our secure customer portal lets you manage appointments, pay invoices and get automatic reminders." },
+];
+
+/** Referral program (provided by the owner). */
+export const referral = {
+  headline: "Refer friends. Earn rewards.",
+  intro:
+    "Love your clean yard? Share Paw N Scoop with friends, family and neighbors. The more people you refer, the bigger your rewards get, all the way up to free scoops for life.",
+  tiers: [
+    { count: 1, reward: "$25 off" },
+    { count: 3, reward: "1 free month of service" },
+    { count: 5, reward: "5% off poop scooping for life" },
+    { count: 7, reward: "$50 off" },
+    { count: 10, reward: "An additional 5% off for life" },
+    { count: 25, reward: "Free scoops for life!" },
+  ],
+  between: "For every referral in between the reward levels above, you get a $25 Visa gift card.",
+  rules: [
+    "Your referred friend must stay a paying customer for at least 60 days for you to receive credit.",
+    "Referrals must be new, first-time Paw N Scoop customers.",
+    "Self-referrals (for example, signing up under a different name or address) aren't eligible.",
+    "Your friend must mention your name when they sign up, or you can let us know about the referral in advance.",
+  ],
+  steps: [
+    { title: "Share", body: "Tell friends, family and neighbors about Paw N Scoop, or send them our website." },
+    { title: "They sign up", body: "Your friend requests a quote and mentions your name, or you let us know about them ahead of time." },
+    { title: "You earn rewards", body: "Once they've been a paying customer for 60 days, the referral counts toward your rewards." },
+  ],
+};
+
+/** Our promise (About page). Guarantees as stated on pawnscoop.com. */
 export const promises = [
   {
     icon: "calendar",
@@ -128,199 +542,22 @@ export const promises = [
   },
 ];
 
-export const story = {
-  eyebrow: "About Paw N Scoop",
-  title: "Locally owned. El Paso proud.",
-  body: [
-    "Paw N Scoop is a locally owned El Paso company built around one simple job: keeping your yard clean, safe and ready for the people and pups who use it.",
-    "From recurring poop scooping to deep artificial turf cleaning and yard work, we show up on time, communicate clearly and treat every yard like our own. It's why our customers give us five stars and stick with us for years.",
-  ],
-  image: { src: "/images/story.svg", alt: "Placeholder: Paw N Scoop team member with a happy dog in a clean backyard" }, // PLACEHOLDER photo
-};
-
-export type Service = {
-  slug: "residential" | "lawn-care" | "turf-cleaning" | "commercial";
-  name: string;
-  short: string;
-  headline: string;
-  intro: string;
-  bullets: string[];
-  features: { title: string; body: string }[];
-  priceNote: string;
-  mascot: "scooper" | "laptop" | "sniffing";
-  theme: Theme;
-};
-
-export const services: Service[] = [
-  {
-    slug: "residential",
-    name: "Residential",
-    short: "Recurring & one-time poop scooping",
-    headline: "A spotless yard, on repeat.",
-    intro: "Weekly, bi-weekly or monthly visits (or a one-time cleanup) that keep your yard clean, your shoes safe and your dog's favorite zoomie zone ready to go.",
-    bullets: [
-      "Weekly, bi-weekly or monthly plans",
-      "One-time cleanups available",
-      "Gate double-checked + photo after every visit",
-      "Bundle with lawn care & yard work",
-    ],
-    features: [
-      { title: "Every corner covered", body: "We walk your whole yard so nothing gets missed, from the patio to behind the shed." },
-      { title: "First scoop free", body: "Sign up for weekly, bi-weekly or monthly service and your first scoop is on us." },
-      { title: "Easy online portal", body: "Book, manage appointments, pay invoices and get automatic reminders through our secure customer portal." },
-      { title: "Gate-safe promise", body: "We double-check every latch and send a photo of your closed gate before we leave." },
-    ],
-    priceNote: "Plans from $20/visit",
-    mascot: "scooper",
-    theme: "yellow",
-  },
-  {
-    slug: "lawn-care",
-    name: "Lawn Care",
-    short: "Mowing, trimming & yard work",
-    headline: "A lawn that looks as good as it smells.",
-    intro: "Lawn care, lawn maintenance and yard work across El Paso County. We'll mow, edge, trim and tidy so your whole yard is pawsome, not just poop-free.",
-    bullets: [
-      "Mowing, edging & trimming",
-      "Weeding & general yard cleanup",
-      "Junk & debris removal",
-      "Bundle with poop scooping for one easy visit",
-    ],
-    features: [
-      { title: "Clean, crisp edges", body: "Mowing, edging and trimming that keep your lawn looking sharp all season." },
-      { title: "Full yard cleanup", body: "Weeds, leaves and clutter cleared out so your outdoor space is ready to enjoy." },
-      { title: "Junk removal", body: "Got old debris or junk piling up? We'll haul it away so your yard has room to breathe." },
-      { title: "One crew, one visit", body: "Pair lawn care with pet waste removal and get the whole yard handled at once." },
-    ],
-    priceNote: "Custom quote for your yard", // PLACEHOLDER: add a starting price if you have one
-    mascot: "scooper",
-    theme: "black",
-  },
-  {
-    slug: "commercial",
-    name: "Commercial",
-    short: "Pet areas for HOAs, apartments & businesses",
-    headline: "Cleaner common areas. Happier residents.",
-    intro: "Dog runs, pet areas and shared green spaces kept clean for apartment communities, HOAs and dog-friendly businesses across El Paso County.",
-    bullets: [
-      "Common-area & dog run waste removal",
-      "Artificial turf cleaning for pet areas",
-      "Recurring schedules that fit your property",
-      "Photo confirmation after every visit",
-    ],
-    features: [
-      { title: "Property-wide coverage", body: "Walkways, landscaping, dog runs and pet areas, serviced on a schedule that fits your community." },
-      { title: "Turf that stays fresh", body: "Commercial-grade turf cleaning keeps high-traffic pet areas from smelling." },
-      { title: "Clear communication", body: "Visit confirmations and photos, so managers always know the job is done." },
-      { title: "Satisfaction guaranteed", body: "If something's missed, tell us within 24 hours and we'll make it right." },
-    ],
-    priceNote: "Custom quotes for every property",
-    mascot: "laptop",
-    theme: "yellow",
-  },
-  {
-    slug: "turf-cleaning",
-    name: "Turf Cleaning",
-    short: "Deodorize & disinfect artificial turf",
-    headline: "Fresh turf, not 'eau de dog'.",
-    intro: "Professional artificial turf cleaning with commercial equipment, deodorizer, disinfectant and turf-safe products that eliminate odors and bacteria.",
-    bullets: [
-      "Commercial cleaning equipment",
-      "Deodorizer + disinfectant treatment",
-      "Turf-safe, pet-friendly products",
-      "Add to any plan or book on its own",
-    ],
-    features: [
-      { title: "Eliminates odors", body: "Our deodorizing treatment targets the source of pet odors instead of masking them." },
-      { title: "Kills bacteria", body: "Disinfectant treatment knocks out bacteria where your pets and kids play." },
-      { title: "Safe for your turf", body: "We only use turf-safe products, so your lawn stays looking great." },
-      { title: "Perfect for El Paso heat", body: "Summer heat makes turf odors worse. Regular cleanings keep it fresh all year." },
-    ],
-    priceNote: "Custom quote for your turf", // PLACEHOLDER: add a starting price if you have one
-    mascot: "sniffing",
-    theme: "white",
-  },
-];
-
-export const features = [
-  { icon: "users", title: "Locally Owned", body: "An El Paso company serving our neighbors across El Paso County." },
-  { icon: "paw", title: "Pet Safety", body: "Pet-safe, turf-safe products and gentle crews. Your pup's health comes first." },
-  { icon: "laptop", title: "Customer Portal", body: "Book, manage appointments and pay invoices online, any time." },
-  { icon: "file", title: "No Contracts", body: "Weekly, bi-weekly, monthly or one-time. Stay because you love us." },
-  { icon: "camera", title: "Gate Photos", body: "Every gate double-checked, with a photo confirmation after each visit." },
-  { icon: "message", title: "Automatic Reminders", body: "Automatic reminders before visits, plus quick, friendly communication." },
-];
-
-export const steps = [
-  { title: "Request a Quote", body: "Tap any Free Quote button and fill out our quick online request form. Takes about a minute." },
-  { title: "Schedule", body: "We'll confirm your quote and pick a weekly, bi-weekly or monthly service day. Your first scoop is free." },
-  { title: "We Scoop", body: "We clean every corner, double-check your gate and send a photo confirmation." },
-  { title: "Enjoy Your Yard", body: "Bare feet, backyard BBQs, cartwheels. Your yard is officially back in business." },
-];
-
-export type Location = {
-  slug: string;
-  city: string;
-  region: string;
-  neighborhoods: string[];
-  /** position on the decorative map, 0–100 */
-  pin: { x: number; y: number };
-};
-
-// El Paso County service areas.
-// Pins are rough positions on the stylized county map (0–100).
-export const locations: Location[] = [
-  { slug: "west-el-paso", city: "West El Paso", region: "TX", neighborhoods: ["Upper Valley", "Coronado", "Kern Place"], pin: { x: 30, y: 40 } },
-  { slug: "northeast-el-paso", city: "Northeast El Paso", region: "TX", neighborhoods: ["Northgate", "Castner Heights", "Sun Valley"], pin: { x: 50, y: 22 } },
-  { slug: "east-el-paso", city: "East El Paso", region: "TX", neighborhoods: ["Eastridge", "Pebble Hills", "Tierra Del Este"], pin: { x: 62, y: 46 } },
-  { slug: "horizon-city", city: "Horizon City", region: "TX", neighborhoods: ["Horizon Heights", "Paseo del Este"], pin: { x: 80, y: 56 } },
-  { slug: "socorro", city: "Socorro & Lower Valley", region: "TX", neighborhoods: ["Socorro", "Ysleta", "San Elizario", "Clint"], pin: { x: 66, y: 70 } },
-  { slug: "upper-valley", city: "Canutillo & Westway", region: "TX", neighborhoods: ["Canutillo", "Westway", "Vinton", "Anthony"], pin: { x: 18, y: 18 } },
-];
-
-export type Faq = { q: string; a: string; category: "Pricing" | "Service" | "Safety" | "Account" };
-
-export const faqs: Faq[] = [
-  { category: "Pricing", q: "How much does pet waste removal cost?", a: "Pricing depends on the number of dogs, yard size and how often you'd like service. Most recurring residential plans start around $20 per visit. Request a free quote and we'll give you an exact price, no surprises." },
-  { category: "Safety", q: "Is it safe for my dogs to be in the yard while you clean?", a: "Totally fine for friendly pups! If your dog is anxious, protective or a known escape artist, just let us know and we'll ask that they stay inside during the visit." },
-  { category: "Account", q: "Do I have to sign a contract?", a: "Nope. Choose weekly, bi-weekly, monthly or one-time service. You can change or pause your plan any time." },
-  { category: "Service", q: "How often can you come?", a: "We offer weekly, bi-weekly and monthly recurring service, plus one-time cleanups for parties, move-outs or catch-up visits." },
-  { category: "Safety", q: "Will you leave my gate open?", a: "Never on purpose. Our Gate Security Guarantee means we double-check every gate before we leave and send you a photo confirmation after each visit." },
-  { category: "Service", q: "What if I'm not happy with a visit?", a: "Our 100% Satisfaction Guarantee has you covered. Let us know within 24 hours and we'll come back and make it right at no extra cost." },
-  { category: "Service", q: "Do I need to be home during the visit?", a: "Not at all. Just make sure we can access the yard. You'll get automatic reminders and a photo of your closed gate when we're done." },
-  { category: "Pricing", q: "Is the first scoop really free?", a: "Yes! When you sign up for weekly, bi-weekly or monthly service, your first scoop is on us." },
-  { category: "Service", q: "Which areas do you serve?", a: "We serve El Paso and communities across El Paso County, including Horizon City, Socorro, Canutillo and the Upper and Lower Valley. Request a quote and we'll confirm we can reach you." },
-  { category: "Account", q: "How do I book and pay?", a: "Everything happens through our secure customer portal: book online, manage appointments, pay invoices and receive automatic reminders." },
-  { category: "Service", q: "Do you clean artificial turf?", a: "Yes. Our professional turf cleaning uses commercial equipment, deodorizer, disinfectant and turf-safe products to eliminate odors and bacteria." },
-  { category: "Service", q: "Do you offer lawn care too?", a: "We do! Our lawn care service covers mowing, edging, trimming, weeding, yard cleanup and junk removal. Bundle it with poop scooping and we'll handle the whole yard in one visit." },
-];
-
 export const finalCta = {
   title: "Don't wait, sign up today!",
-  body: "Request your free quote online and claim your first scoop on the house.",
+  body: "Request your free quote online for poop scooping, turf cleaning, lawn care, yard cleanups or deodorizing.",
 };
 
 export const about = {
+  intro:
+    "Paw N Scoop is a locally owned El Paso company built around one simple job: keeping your yard clean, fresh and ready for the people and pups who use it.",
+  body: [
+    "What started with scooping dog poop has grown into complete outdoor cleaning and yard care: pet waste removal, artificial turf cleaning, lawn care, yard cleanups and disinfecting & deodorizing, all from one friendly crew.",
+    "We show up on time, communicate clearly and treat every yard like our own. It's why El Paso pet parents give us five stars and stick with us for years.",
+  ],
   values: [
     { title: "Show up on time", body: "Reliability is the whole job. Timely visits and automatic reminders, every time." },
     { title: "Communicate clearly", body: "Quick replies, visit confirmations and gate photos, so you're never left wondering." },
     { title: "Leave it better", body: "Every gate double-checked, every corner covered, and a 100% satisfaction guarantee." },
-    { title: "Treat pets like family", body: "Pet-safe, turf-safe products and a crew that genuinely loves dogs." },
-  ],
-  // PLACEHOLDER team members
-  team: [
-    { name: "Your Name", role: "Owner", dog: "Add your pup's name" },
-    { name: "Team Member", role: "Lead Scooper", dog: "Add their pup's name" },
-    { name: "Team Member", role: "Turf Specialist", dog: "Add their pup's name" },
-  ],
-};
-
-export const referral = {
-  title: `Give ${promo.referralCredit}, get ${promo.referralCredit}.`,
-  body: `Love a clean yard? Spread the word. When a friend signs up with your name, you both get ${promo.referralCredit} off your next bill. No limit on referrals.`,
-  steps: [
-    { title: "Share", body: "Tell friends, neighbors and that one coworker who won't stop talking about their dog." },
-    { title: "They sign up", body: "Your friend mentions your name when they request a quote." },
-    { title: "You both save", body: `After their first paid visit, you each get ${promo.referralCredit} credited. Repeat forever.` },
+    { title: "Treat pets like family", body: "Pet-safe products and a crew that genuinely loves dogs." },
   ],
 };

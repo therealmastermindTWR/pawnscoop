@@ -8,7 +8,7 @@ import { QuoteButton } from "@/components/ui/QuoteButton";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 import { SplitText } from "@/components/ui/SplitText";
-import { finalCta, site } from "@/lib/content";
+import { finalCta, promo, site } from "@/lib/content";
 
 export function FinalCta({ title = finalCta.title, body = finalCta.body }: { title?: string; body?: string }) {
   return (
@@ -32,6 +32,12 @@ export function FinalCta({ title = finalCta.title, body = finalCta.body }: { tit
               <Phone className="size-5" aria-hidden /> {site.phone}
             </a>
           </Reveal>
+          <Reveal delay={0.35} className="border-hard flex max-w-xl items-start gap-3 rounded-2xl bg-white/70 px-4 py-3 text-sm font-medium text-ink">
+            <PawIcon className="mt-0.5 size-4 shrink-0" />
+            <p>
+              <strong>{promo.headline}</strong> {promo.eligibility}
+            </p>
+          </Reveal>
         </div>
         <motion.div
           className="relative mx-auto w-full max-w-md"
@@ -41,7 +47,7 @@ export function FinalCta({ title = finalCta.title, body = finalCta.body }: { tit
           transition={{ type: "spring", stiffness: 100, damping: 14 }}
         >
           <div className="animate-blob absolute inset-[6%] bg-white" aria-hidden />
-          <Mascot pose="laptop" className="relative h-auto w-full" />
+          <Mascot pose="celebrating" className="relative h-auto w-full" aria-hidden />
         </motion.div>
       </div>
     </Section>

@@ -24,7 +24,7 @@ export function Preloader() {
       markReady();
       return;
     }
-    const duration = reduce ? 400 : 1500;
+    const duration = reduce ? 300 : 900;
     const start = performance.now();
     let raf = 0;
     const loop = (now: number) => {

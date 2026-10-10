@@ -17,7 +17,7 @@ function Dropdown({ label, items, footer }: { label: string; items: DropItem[]; 
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLLIElement>(null);
   const pathname = usePathname();
-  const id = `dd-${label.toLowerCase()}`;
+  const id = `dd-${label.toLowerCase().replace(/\s+/g, "-")}`;
 
   useEffect(() => setOpen(false), [pathname]);
 
@@ -95,7 +95,7 @@ export function Header() {
     setHidden(y > prev && y > 280);
   });
 
-  const locationItems = locations.slice(0, 5).map((l) => ({ label: l.city, href: `/locations#${l.slug}`, blurb: l.neighborhoods.join(" · ") }));
+  const locationItems = locations.slice(0, 6).map((l) => ({ label: l.city, href: `/locations#${l.slug}` }));
 
   return (
     <>
@@ -117,8 +117,8 @@ export function Header() {
 
             <nav aria-label="Main" className="hidden lg:block">
               <ul className="flex items-center gap-0.5 text-[15px]">
-                <Dropdown label="Services" items={nav.services} />
-                <Dropdown label="Locations" items={locationItems} footer={{ label: "All locations", href: "/locations" }} />
+                <Dropdown label="Services" items={[...nav.services, nav.commercial]} footer={{ label: "All services", href: "/services" }} />
+                <Dropdown label="Service Areas" items={locationItems} footer={{ label: "All service areas", href: "/locations" }} />
                 {nav.main.map((l) => (
                   <li key={l.href}>
                     <Link href={l.href} className="rounded-full px-3.5 py-2 font-semibold transition-colors hover:bg-sun">

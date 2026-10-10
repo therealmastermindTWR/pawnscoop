@@ -4,8 +4,9 @@ import { LocationsDirectory } from "@/components/pages/LocationsDirectory";
 import { PageHero } from "@/components/pages/PageHero";
 
 export const metadata: Metadata = {
-  title: "Service Areas",
-  description: "Paw N Scoop provides pet waste removal, artificial turf cleaning and yard work across El Paso County, TX.",
+  title: "Service Areas in El Paso County, TX",
+  description:
+    "Serving El Paso, TX and El Paso County: East, West and Northeast El Paso, Horizon City, Socorro, Canutillo, San Elizario, Clint and Fabens.",
   alternates: { canonical: "/locations" },
 };
 
@@ -13,11 +14,11 @@ export default function LocationsPage() {
   return (
     <>
       <PageHero
-        eyebrow="Locations"
-        title={["Now scooping", "near you."]}
-        sub="We're a local crew serving the communities below, and we're growing fast. Don't see your town? Request a quote and we'll let you know if we can reach you."
+        eyebrow="Service areas"
+        title={["Yard care across", "El Paso County."]}
+        sub="Paw N Scoop is a local crew serving El Paso, TX and surrounding communities throughout El Paso County with poop scooping, artificial turf cleaning, lawn care, yard cleanups and deodorizing."
         pose="sniffing"
-        breadcrumb="Locations"
+        breadcrumb="Service Areas"
       />
       <LocationsDirectory />
       <FinalCta title="Your yard could be next." />

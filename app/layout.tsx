@@ -9,7 +9,8 @@ import { Preloader } from "@/components/layout/Preloader";
 import { ScrollProgress } from "@/components/layout/ScrollProgress";
 import { ColorShift } from "@/components/providers/ColorShift";
 import { Providers } from "@/components/providers/Providers";
-import { faqs, locations, site, stats } from "@/lib/content";
+import { JsonLd } from "@/components/ui/JsonLd";
+import { locations, serviceHref, services, site } from "@/lib/content";
 import "./globals.css";
 
 const display = Bricolage_Grotesque({
@@ -28,21 +29,12 @@ const body = DM_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} | Pet Waste Removal & Dog Poop Scooping in El Paso, TX`,
+    default: `${site.name} | Yard Cleaning, Turf Care & Poop Scooping El Paso`,
     template: `%s | ${site.name}`,
   },
   description: site.description,
-  keywords: [
-    "pet waste removal El Paso",
-    "pooper scooper El Paso",
-    "dog poop pickup El Paso TX",
-    "yard cleanup El Paso County",
-    "dog waste service Horizon City",
-    "artificial turf cleaning El Paso",
-    "lawn care El Paso",
-  ],
   applicationName: site.name,
-  alternates: { canonical: "/" },
+  // Canonical URLs are set per page (a layout-level canonical would leak to every child page).
   openGraph: {
     type: "website",
     siteName: site.name,
@@ -87,29 +79,25 @@ const jsonLd = {
     { "@type": "AdministrativeArea", name: "El Paso County, TX" },
     ...locations.map((l) => ({ "@type": "Place", name: `${l.city}, ${l.region}` })),
   ],
-  // Google Business Profile hours: every day 6:30 AM – 6:30 PM
+  // Owner-confirmed hours: every day 7:30 AM – 6:30 PM
   openingHoursSpecification: [
     {
       "@type": "OpeningHoursSpecification",
       dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-      opens: "06:30",
+      opens: "07:30",
       closes: "18:30",
     },
   ],
   hasMap: site.googleProfileUrl,
   sameAs: [site.googleProfileUrl, ...site.social.map((s) => s.href)],
-  makesOffer: [
-    { "@type": "Offer", itemOffered: { "@type": "Service", name: "Pet waste removal (weekly, bi-weekly, monthly & one-time)" } },
-    { "@type": "Offer", itemOffered: { "@type": "Service", name: "Artificial turf cleaning" } },
-    { "@type": "Offer", itemOffered: { "@type": "Service", name: "Lawn care, lawn maintenance & yard work" } },
-    { "@type": "Offer", itemOffered: { "@type": "Service", name: "Commercial pet waste removal" } },
-  ],
-};
-
-const faqLd = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: faqs.slice(0, 8).map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Outdoor cleaning & yard care services",
+    itemListElement: services.map((s) => ({
+      "@type": "Offer",
+      itemOffered: { "@type": "Service", "@id": `${site.url}${serviceHref(s.slug)}#service`, name: s.name, url: `${site.url}${serviceHref(s.slug)}` },
+    })),
+  },
 };
 
 // Runs before paint: skips the preloader on repeat visits and hides a dismissed announcement bar.
@@ -123,8 +111,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <noscript>
           <style>{`[data-preloader]{display:none!important}`}</style>
         </noscript>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
+        <JsonLd data={jsonLd} />
       </head>
       <body>
         <a

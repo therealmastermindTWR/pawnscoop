@@ -8,7 +8,7 @@ import { PawIcon } from "@/components/ui/Icons";
 import { staggerChild, staggerParent } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { locations } from "@/lib/content";
+import { locations, site } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
 export function ServiceMap({ active, onPin, className }: { active: string | null; onPin?: (slug: string | null) => void; className?: string }) {
@@ -89,15 +89,15 @@ export function Locations() {
     <Section theme="yellow" aria-labelledby="loc-title" className="py-24 md:py-36">
       <div className="container-x">
         <div className="mb-14 flex flex-col justify-between gap-6 md:mb-20 lg:flex-row lg:items-end">
-          <SectionHeading id="loc-title" eyebrow="Service areas" title={["Scooping across", "the neighborhood."]} />
+          <SectionHeading id="loc-title" eyebrow="Service areas" title={["Serving El Paso", "& El Paso County."]} sub={`We serve ${site.serviceArea}, including these communities.`} />
           <Link href="/locations" className="group flex items-center gap-2 font-display text-lg font-bold underline decoration-[3px] underline-offset-[6px] lg:pb-4">
-            View all locations <ArrowUpRight className="size-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" aria-hidden />
+            All service areas <ArrowUpRight className="size-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" aria-hidden />
           </Link>
         </div>
 
         <div className="grid items-start gap-10 lg:grid-cols-[1.25fr_1fr]">
           <motion.ul
-            className="grid gap-4 sm:grid-cols-2"
+            className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-3"
             variants={staggerParent}
             initial="hidden"
             whileInView="show"
@@ -114,33 +114,20 @@ export function Locations() {
                     onFocus={() => setActive(l.slug)}
                     onBlur={() => setActive(null)}
                     className={cn(
-                      "border-hard group flex flex-col rounded-[1.75rem] p-6 text-ink transition-all duration-300",
+                      "border-hard group flex flex-col rounded-[1.5rem] p-4 text-ink transition-all duration-300 sm:p-5",
                       on ? "-translate-y-1 bg-ink text-white shadow-hard" : "bg-white shadow-hard-sm",
                     )}
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div>
-                        <h3 className="text-2xl font-extrabold md:text-3xl">{l.city}</h3>
+                        <h3 className="text-lg font-extrabold sm:text-xl">{l.city}</h3>
                         <p className={cn("mt-1 flex items-center gap-1.5 text-sm font-semibold", on ? "text-sun" : "text-charcoal")}>
                           <MapPin className="size-4" aria-hidden /> {l.region}
                         </p>
                       </div>
-                      <span className={cn("grid size-10 shrink-0 place-items-center rounded-full border-2 transition-all", on ? "rotate-45 border-sun bg-sun text-ink" : "border-ink")}>
+                      <span className={cn("hidden size-9 shrink-0 place-items-center rounded-full border-2 transition-all sm:grid", on ? "rotate-45 border-sun bg-sun text-ink" : "border-ink")}>
                         <ArrowUpRight className="size-5" aria-hidden />
                       </span>
-                    </div>
-                    <div className={cn("grid transition-[grid-template-rows] duration-500 ease-out-expo", on ? "grid-rows-[1fr]" : "grid-rows-[1fr] md:grid-rows-[0fr]")}>
-                      <div className="overflow-hidden">
-                        <div className="flex flex-col gap-3 pt-5">
-                          <div className="flex flex-wrap gap-1.5">
-                            {l.neighborhoods.map((n) => (
-                              <span key={n} className="rounded-full px-2.5 py-1 text-xs font-semibold ring-1 ring-current/25">
-                                {n}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
                     </div>
                   </Link>
                 </motion.li>

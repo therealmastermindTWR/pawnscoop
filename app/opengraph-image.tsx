@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Paw N Scoop: pet waste removal. Less poop, more play.";
+export const alt = "Paw N Scoop: Cleaner Yards. Happier Homes. Outdoor cleaning and yard care in El Paso, TX.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -12,13 +12,13 @@ export default function OgImage() {
           <div style={{ width: 64, height: 64, borderRadius: 999, background: "#111", display: "flex", alignItems: "center", justifyContent: "center", color: "#FFCC24", fontSize: 36, fontWeight: 900 }}>P</div>
           PAW N SCOOP
         </div>
-        <div style={{ display: "flex", flexDirection: "column", fontSize: 128, fontWeight: 900, lineHeight: 0.9, letterSpacing: -5, color: "#111" }}>
-          <span>Less poop.</span>
-          <span>More play.</span>
+        <div style={{ display: "flex", flexDirection: "column", fontSize: 112, fontWeight: 900, lineHeight: 0.9, letterSpacing: -4, color: "#111" }}>
+          <span>Cleaner Yards.</span>
+          <span>Happier Homes.</span>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-          <div style={{ background: "#FF9900", border: "5px solid #111", borderRadius: 999, padding: "14px 32px", fontSize: 34, fontWeight: 800, color: "#111" }}>Get your FREE first cleanup</div>
-          <div style={{ fontSize: 30, color: "#111" }}>Pet waste removal · Turf cleaning · El Paso, TX</div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+          <div style={{ fontSize: 34, fontWeight: 800, color: "#111" }}>Complete Outdoor Cleaning &amp; Yard Care in El Paso, TX</div>
+          <div style={{ fontSize: 26, color: "#111" }}>Poop Scooping · Artificial Turf Cleaning · Lawn Care · Yard Cleanups · Deodorizing</div>
         </div>
       </div>
     ),

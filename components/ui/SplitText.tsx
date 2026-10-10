@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useInView, useReducedMotion } from "motion/react";
-import { useRef, type ElementType } from "react";
+import { useRef, type ElementType, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -10,6 +10,8 @@ type Props = {
   as?: ElementType;
   className?: string;
   lineClassName?: (i: number) => string | undefined;
+  /** Extra decoration rendered inside a line (e.g. an underline). Lines are `relative`. */
+  lineAddon?: (i: number) => ReactNode;
   mode?: "words" | "chars";
   delay?: number;
   stagger?: number;
@@ -28,6 +30,7 @@ export function SplitText({
   as: Tag = "h2",
   className,
   lineClassName,
+  lineAddon,
   mode = "words",
   delay = 0,
   stagger,
@@ -47,7 +50,7 @@ export function SplitText({
       <span className="sr-only">{lines.join(" ")}</span>
       <span aria-hidden className="block">
         {lines.map((line, li) => (
-          <span key={li} className={cn("block", lineClassName?.(li))}>
+          <span key={li} className={cn("relative block", lineClassName?.(li))}>
             {line.split(" ").map((word, wi, arr) => (
               <span key={wi} className="-mb-[0.12em] inline-block overflow-hidden pb-[0.12em] align-bottom whitespace-nowrap">
                 {(mode === "chars" ? Array.from(word) : [word]).map((piece, pi) => {
@@ -67,6 +70,7 @@ export function SplitText({
                 {wi < arr.length - 1 && <span className="inline-block">&nbsp;</span>}
               </span>
             ))}
+            {lineAddon?.(li)}
           </span>
         ))}
       </span>

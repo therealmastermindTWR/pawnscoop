@@ -1,6 +1,6 @@
 "use client";
 
-import { CalendarCheck, ClipboardList, Shovel, Sun, type LucideIcon } from "lucide-react";
+import { CalendarCheck, ClipboardList, Sparkles, Sun, type LucideIcon } from "lucide-react";
 import { useRef } from "react";
 import { PawIcon } from "@/components/ui/Icons";
 import { QuoteButton } from "@/components/ui/QuoteButton";
@@ -8,16 +8,22 @@ import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
-import { steps } from "@/lib/content";
+import { steps as defaultSteps } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
-const icons: LucideIcon[] = [ClipboardList, CalendarCheck, Shovel, Sun];
+const icons: LucideIcon[] = [ClipboardList, CalendarCheck, Sparkles, Sun];
 
 /**
  * Timeline whose connecting path is built from the real positions of the step nodes
  * (so it never distorts), drawn on scroll, with a paw that travels along it.
  */
-export function HowItWorks() {
+type Step = { title: string; body: string };
+
+export function HowItWorks({
+  steps = defaultSteps,
+  title = ["Four steps to a", "cleaner yard."],
+  sub = "Getting started is easier than teaching your dog to sit. (Okay, much easier.)",
+}: { steps?: Step[]; title?: string[]; sub?: string }) {
   const ref = useRef<HTMLElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -109,8 +115,8 @@ export function HowItWorks() {
           id="how-title"
           align="center"
           eyebrow="How it works"
-          title={["Four steps to a", "poop-free yard."]}
-          sub="Getting started is easier than teaching your dog to sit. (Okay, much easier.)"
+          title={title}
+          sub={sub}
           className="mb-16 md:mb-24"
         />
 
@@ -127,7 +133,7 @@ export function HowItWorks() {
 
           <ol className="relative flex flex-col gap-14 md:gap-24">
             {steps.map((s, i) => {
-              const Icon = icons[i];
+              const Icon = icons[i % icons.length];
               const right = i % 2 === 1;
               return (
                 <li key={s.title} className="relative grid grid-cols-[3.5rem_1fr] items-center gap-5 md:grid-cols-[1fr_6rem_1fr] md:gap-8">

@@ -9,6 +9,7 @@ import { PawIcon } from "@/components/ui/Icons";
 import { Section } from "@/components/ui/Section";
 import { SplitText } from "@/components/ui/SplitText";
 import type { Theme } from "@/lib/content";
+import { cn } from "@/lib/utils";
 
 type Props = {
   eyebrow: string;
@@ -17,10 +18,14 @@ type Props = {
   pose?: MascotPose;
   theme?: Theme;
   breadcrumb: string;
+  /** Optional middle breadcrumb (e.g. Services). */
+  parent?: { label: string; href: string };
+  /** Override the H1 size (long headlines). */
+  titleClassName?: string;
   children?: ReactNode;
 };
 
-export function PageHero({ eyebrow, title, sub, pose = "waving", theme = "yellow", breadcrumb, children }: Props) {
+export function PageHero({ eyebrow, title, sub, pose = "waving", theme = "yellow", breadcrumb, parent, titleClassName, children }: Props) {
   const { ready } = useIntro();
   const reduce = useReducedMotion();
   const fade = (delay: number) => ({
@@ -42,6 +47,16 @@ export function PageHero({ eyebrow, title, sub, pose = "waving", theme = "yellow
                 </Link>
               </li>
               <li aria-hidden>/</li>
+              {parent && (
+                <>
+                  <li>
+                    <Link href={parent.href} className="underline-offset-4 hover:underline">
+                      {parent.label}
+                    </Link>
+                  </li>
+                  <li aria-hidden>/</li>
+                </>
+              )}
               <li aria-current="page" className="opacity-75">
                 {breadcrumb}
               </li>
@@ -57,7 +72,7 @@ export function PageHero({ eyebrow, title, sub, pose = "waving", theme = "yellow
             trigger="manual"
             play={ready}
             delay={0.1}
-            className="text-[clamp(3rem,9vw,7.5rem)] leading-[0.88] font-extrabold tracking-[-0.05em]"
+            className={cn("leading-[0.88] font-extrabold tracking-[-0.05em]", titleClassName ?? "text-[clamp(3rem,9vw,7.5rem)]")}
           />
           <motion.p {...fade(0.4)} className="text-muted max-w-2xl text-lg md:text-xl">
             {sub}

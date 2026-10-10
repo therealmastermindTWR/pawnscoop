@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import { Camera, FileText, Laptop, MessageSquareText, Users, type LucideIcon } from "lucide-react";
+import { BadgeCheck, CalendarClock, Camera, FileText, Users, type LucideIcon } from "lucide-react";
 import { CountUp } from "@/components/ui/CountUp";
 import { Stars } from "@/components/ui/Stars";
 import { PawIcon } from "@/components/ui/Icons";
@@ -17,10 +17,11 @@ const PawGlyph: IconType = ({ className }) => <PawIcon className={className} />;
 const icons: Record<string, IconType | LucideIcon> = {
   users: Users,
   paw: PawGlyph,
-  laptop: Laptop,
+  calendar: CalendarClock,
+  badge: BadgeCheck,
   file: FileText,
   camera: Camera,
-  message: MessageSquareText,
+
 };
 
 const hoverAnims = [
@@ -34,13 +35,13 @@ const hoverAnims = [
 
 export function WhyChooseUs() {
   return (
-    <Section theme="black" aria-labelledby="why-title" className="py-24 md:py-36">
+    <Section theme="yellow" aria-labelledby="why-title" className="py-24 md:py-36">
       <div className="container-x">
         <SectionHeading
           id="why-title"
-          eyebrow="Why Paw N Scoop"
-          title={["Good dogs deserve", "great service."]}
-          sub="Little things add up. Here's what makes pet parents switch to us (and stay)."
+          eyebrow="Why us"
+          title={["Why choose", "Paw N Scoop?"]}
+          sub="A local crew that shows up, communicates and takes care of your whole yard."
           className="mb-14 md:mb-20"
         />
 
@@ -54,7 +55,7 @@ export function WhyChooseUs() {
           {/* big stat tile */}
           <motion.li
             variants={staggerChild}
-            className="border-hard relative flex flex-col justify-between overflow-hidden rounded-[2rem] bg-sun p-8 text-ink sm:col-span-2 lg:row-span-2 md:p-10"
+            className="border-hard relative flex flex-col justify-between overflow-hidden rounded-[2rem] bg-white p-8 text-ink sm:col-span-2 lg:row-span-2 md:p-10"
           >
             <p className="eyebrow">Rated on Google</p>
             <div className="relative z-10">

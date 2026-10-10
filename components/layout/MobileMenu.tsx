@@ -13,10 +13,10 @@ import { nav, site } from "@/lib/content";
 
 const links = [
   { label: "Home", href: "/" },
-  ...nav.services,
-  { label: "Locations", href: "/locations" },
+  { label: "Services", href: "/services" },
+  { label: "Service Areas", href: "/locations" },
+  { label: "Refer a Friend", href: "/refer-a-friend" },
   ...nav.main,
-  { label: "Contact", href: "/contact" },
 ];
 
 export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
@@ -113,6 +113,25 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
                 </li>
               ))}
             </ul>
+            <motion.ul
+              className="mt-6 grid grid-cols-2 gap-2"
+              aria-label="Our services"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ delay: reduce ? 0 : 0.55 }}
+            >
+              {[...nav.services, nav.commercial].map((s) => (
+                <li key={s.href}>
+                  <Link
+                    href={s.href}
+                    className="flex min-h-11 items-center rounded-2xl border-2 border-white/20 px-3 py-2 text-sm font-semibold text-white transition-colors hover:border-sun hover:text-sun"
+                  >
+                    {s.label}
+                  </Link>
+                </li>
+              ))}
+            </motion.ul>
           </nav>
 
           <motion.div
@@ -131,6 +150,7 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
               </a>
               <div className="flex gap-2">
                 {site.social.map((s) => {
+                  // Only real profile URLs from lib/content.ts are rendered.
                   const Icon = socialIcons[s.icon];
                   return (
                     <a

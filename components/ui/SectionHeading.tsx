@@ -26,7 +26,7 @@ export function SectionHeading({ eyebrow, title, sub, align = "left", className,
           </p>
         </Reveal>
       )}
-      <SplitText as={as} id={id} lines={lines} className={cn("text-[clamp(2.4rem,6.2vw,5.4rem)] font-extrabold", titleClassName)} />
+      <SplitText as={as} id={id} lines={lines} className={cn("font-extrabold", titleClassName ?? "text-[clamp(2.4rem,6.2vw,5.4rem)]")} />
       {sub && (
         <Reveal delay={0.2} y={20} className={cn("text-muted max-w-2xl text-lg md:text-xl", align === "center" && "mx-auto")}>
           {sub}

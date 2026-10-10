@@ -1,57 +1,94 @@
 import type { Metadata } from "next";
+import { Gift, Phone } from "lucide-react";
 import { FinalCta } from "@/components/home/FinalCta";
+import { HowItWorks } from "@/components/home/HowItWorks";
 import { PageHero } from "@/components/pages/PageHero";
-import { SimpleForm } from "@/components/pages/SimpleForm";
+import { ShareLink } from "@/components/pages/ShareLink";
+import { PawIcon } from "@/components/ui/Icons";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { referral } from "@/lib/content";
+import { referral, site } from "@/lib/content";
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Refer a Friend",
-  description: referral.body,
+  title: "Refer a Friend & Earn Rewards",
+  description:
+    "Refer friends to Paw N Scoop in El Paso and earn rewards: $25 off for your first referral, bigger rewards at 3, 5, 7 and 10, and free scoops for life at 25.",
   alternates: { canonical: "/refer-a-friend" },
 };
 
 export default function ReferPage() {
   return (
     <>
-      <PageHero eyebrow="Refer a friend" title={[referral.title]} sub={referral.body} pose="celebrating" breadcrumb="Refer a Friend" />
+      <PageHero eyebrow="Refer a friend" title={["Refer friends.", "Earn rewards."]} sub={referral.intro} pose="celebrating" breadcrumb="Refer a Friend">
+        <ShareLink />
+      </PageHero>
 
-      <Section theme="black" aria-labelledby="ref-how" className="py-24 md:py-32">
+      <Section theme="white" aria-labelledby="rewards-title" className="py-24 md:py-32">
         <div className="container-x">
-          <SectionHeading id="ref-how" eyebrow="How it works" title="Three steps to free scoops." className="mb-14" />
-          <ol className="grid gap-5 md:grid-cols-3">
-            {referral.steps.map((s, i) => (
-              <Reveal as="li" key={s.title} delay={i * 0.1} className="flex flex-col gap-3 rounded-[1.75rem] border-2 border-white/15 bg-ink-800 p-8">
-                <span className="grid size-14 place-items-center rounded-full bg-sun font-display text-2xl font-extrabold text-ink">{i + 1}</span>
-                <h3 className="text-3xl font-extrabold text-white">{s.title}</h3>
-                <p className="text-white/75">{s.body}</p>
-              </Reveal>
-            ))}
+          <SectionHeading id="rewards-title" eyebrow="Rewards" title={["The more you refer,", "the more you save."]} className="mb-12" />
+          <ol className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {referral.tiers.map((t, i) => {
+              const top = i === referral.tiers.length - 1;
+              return (
+                <Reveal
+                  as="li"
+                  key={t.count}
+                  delay={i * 0.06}
+                  className={cn("border-hard flex items-center gap-5 rounded-[1.75rem] p-6 shadow-hard", top ? "bg-ink text-white" : i % 2 ? "bg-sun-100 text-ink" : "bg-sun text-ink")}
+                >
+                  <span className={cn("border-hard grid size-20 shrink-0 place-items-center rounded-full font-display leading-none font-extrabold", top ? "bg-sun text-ink" : "bg-white text-ink")}>
+                    <span className="text-center">
+                      <span className="block text-3xl">{t.count}</span>
+                      <span className="block text-[0.65rem] tracking-widest uppercase">{t.count === 1 ? "referral" : "referrals"}</span>
+                    </span>
+                  </span>
+                  <span className="font-display text-2xl leading-tight font-extrabold">{t.reward}</span>
+                </Reveal>
+              );
+            })}
           </ol>
+          <Reveal className="border-hard mt-6 flex items-start gap-3 rounded-[1.5rem] bg-tangerine-100 p-5 text-ink">
+            <Gift className="mt-0.5 size-6 shrink-0" aria-hidden />
+            <p className="text-lg font-semibold">{referral.between}</p>
+          </Reveal>
         </div>
       </Section>
 
-      <Section theme="yellow" aria-labelledby="ref-form" className="py-24 md:py-32">
-        <div className="container-x grid items-start gap-12 lg:grid-cols-[1fr_1.4fr]">
-          <SectionHeading id="ref-form" eyebrow="Send a referral" title={["Know a pup", "parent?"]} sub="Drop their details and we'll reach out with a friendly (never pushy) intro, plus their free first cleanup." />
-          <SimpleForm
-            kind="referral"
-            submitLabel="Send referral"
-            success="Referral sent! Thanks for spreading the scoop."
-            fields={[
-              { name: "yourName", label: "Your name", required: true, autoComplete: "name", half: true },
-              { name: "yourEmail", label: "Your email", type: "email", required: true, autoComplete: "email", half: true },
-              { name: "friendName", label: "Friend's name", required: true, half: true },
-              { name: "friendContact", label: "Friend's email or phone", required: true, half: true },
-              { name: "note", label: "Anything we should know?", type: "textarea" },
-            ]}
-          />
+      <HowItWorks steps={referral.steps} title={["How referrals", "work."]} sub="Three easy steps from sharing to saving." />
+
+      <Section theme="black" aria-labelledby="rules-title" className="py-24 md:py-32">
+        <div className="container-x grid gap-12 lg:grid-cols-[1fr_1.3fr]">
+          <div className="flex flex-col items-start gap-6">
+            <SectionHeading id="rules-title" eyebrow="The fine print" title={["Referral", "rules"]} />
+            <p className="text-white/75">
+              Want to tell us about a referral ahead of time? Call or text{" "}
+              <a href={site.phoneHref} className="font-bold text-sun underline underline-offset-4">
+                {site.phone}
+              </a>{" "}
+              or email{" "}
+              <a href={`mailto:${site.email}`} className="font-bold break-all text-sun underline underline-offset-4">
+                {site.email}
+              </a>
+              .
+            </p>
+            <a href={site.phoneHref} className="border-hard inline-flex h-12 items-center gap-2 rounded-full bg-sun px-6 font-display font-bold text-ink">
+              <Phone className="size-5" aria-hidden /> Tell us about a referral
+            </a>
+          </div>
+          <ul className="flex flex-col gap-4">
+            {referral.rules.map((r) => (
+              <li key={r} className="flex items-start gap-3 rounded-[1.25rem] border-2 border-white/15 bg-ink-800 p-5 text-white">
+                <PawIcon className="mt-1 size-5 shrink-0 text-sun" />
+                <span className="text-lg">{r}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </Section>
 
-      <FinalCta />
+      <FinalCta title="Know someone who needs a clean yard?" body="Send them our way. They can request a free quote online in a couple of minutes, and just mention your name." />
     </>
   );
 }

@@ -36,7 +36,9 @@ export function AnnouncementBar() {
             >
               <Sparkles className="size-4 shrink-0 text-sun" aria-hidden />
               <span className="truncate">
-                Claim your <span className="text-sun underline decoration-2 underline-offset-4 group-hover:text-tangerine">FREE first cleanup!</span>
+                <span className="text-sun underline decoration-2 underline-offset-4 group-hover:text-tangerine">FREE first scoop</span>
+                <span className="hidden sm:inline"> with any weekly, bi-weekly or monthly poop-scooping plan</span>
+                <span className="sm:hidden"> on recurring plans</span>
               </span>
               <span className="sr-only"> (opens in a new tab)</span>
             </a>
@@ -44,7 +46,7 @@ export function AnnouncementBar() {
               <a href={site.clientLoginUrl} className="flex items-center gap-1.5 font-semibold text-white/90 hover:text-sun">
                 <UserRound className="size-4" aria-hidden />
                 <span className="hidden sm:inline">Client Login</span>
-                <span className="sm:hidden">Login</span>
+                <span className="sr-only sm:hidden">Client Login</span>
               </a>
               <button
                 type="button"

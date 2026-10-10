@@ -1,10 +1,11 @@
 "use client";
 
 import { motion, useMotionValue, useReducedMotion, useSpring, useTransform, type MotionValue } from "motion/react";
-import { Phone, Play } from "lucide-react";
+import { ArrowUpRight, Phone, Play } from "lucide-react";
 import { useState, type PointerEvent } from "react";
 import { Mascot } from "@/components/mascot/Mascot";
 import { useIntro } from "@/components/providers/IntroProvider";
+import { Button } from "@/components/ui/Button";
 import { BoneIcon, PawIcon } from "@/components/ui/Icons";
 import { QuoteButton } from "@/components/ui/QuoteButton";
 import { Section } from "@/components/ui/Section";
@@ -47,20 +48,24 @@ function Decor({ item, mx, my, i }: { item: (typeof DECOR)[number]; mx: MotionVa
   );
 }
 
-/** Primary hero CTA: opens the Jobber request form, with a call option alongside. */
-function BookingCta() {
+/** Hero CTAs: free quote (Jobber), explore services, and a call option. */
+function HeroCtas() {
   return (
-    <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-center">
-      <QuoteButton size="lg" magnetic className="h-16 w-full px-8 text-xl shadow-hard sm:w-auto">
-        Book My Free Quote
-      </QuoteButton>
-      <a
-        href={site.phoneHref}
-        className="group flex h-16 items-center justify-center gap-2 rounded-full border-[2.5px] border-ink bg-white px-6 font-display text-lg font-bold text-ink transition-colors hover:bg-sun"
-      >
-        <Phone className="size-5" aria-hidden />
+    <div className="flex w-full flex-col gap-4">
+      <div className="flex w-full flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+        <QuoteButton size="lg" magnetic className="h-16 w-full px-8 text-xl shadow-hard sm:w-auto">
+          Get My Free Quote
+        </QuoteButton>
+        <Button href="/services" variant="light" size="lg" className="h-16 w-full px-7 text-xl sm:w-auto" icon={<ArrowUpRight className="size-5" aria-hidden />}>
+          Explore Our Services
+        </Button>
+      </div>
+      <a href={site.phoneHref} className="group flex items-center gap-2 self-start font-display text-lg font-bold text-ink">
+        <span className="grid size-10 place-items-center rounded-full border-[2.5px] border-ink bg-sun transition-transform group-hover:scale-110">
+          <Phone className="size-4" aria-hidden />
+        </span>
         <span>
-          or call <span className="underline decoration-tangerine decoration-[3px] underline-offset-4">{site.phone}</span>
+          or call <span className="underline decoration-tangerine decoration-[3px] underline-offset-4 group-hover:decoration-ink">{site.phone}</span>
         </span>
       </a>
     </div>
@@ -111,8 +116,14 @@ export function Hero() {
       </div>
 
       <div className="container-x relative grid items-center gap-6 pt-8 pb-16 sm:pt-12 lg:min-h-[calc(100svh-7.5rem)] lg:grid-cols-[1.1fr_1fr] lg:gap-4 lg:pt-6 lg:pb-20">
-        <div className="relative z-10 flex flex-col items-start gap-7">
-          <motion.div {...show(0.05)} className="border-hard flex items-center gap-3 rounded-full bg-white py-1.5 pr-4 pl-1.5 shadow-hard-sm">
+        <div className="relative z-10 flex flex-col items-start gap-6">
+          <motion.a
+            {...show(0.05)}
+            href={site.googleProfileUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="border-hard flex items-center gap-3 rounded-full bg-white py-1.5 pr-4 pl-1.5 shadow-hard-sm transition-transform hover:-translate-y-0.5"
+          >
             <span className="flex -space-x-2" aria-hidden>
               {["bg-sun", "bg-tangerine", "bg-ink"].map((c, i) => (
                 <span key={i} className={cn("grid size-8 place-items-center rounded-full border-2 border-white", c)}>
@@ -126,53 +137,61 @@ export function Hero() {
                 Rated <strong>{stats.rating.toFixed(1)}</strong> on Google · {stats.reviewCount} reviews
               </span>
             </span>
-          </motion.div>
+            <span className="sr-only"> (opens Google reviews in a new tab)</span>
+          </motion.a>
 
-          <div className="relative">
-            <SplitText
-              as="h1"
-              id="hero-title"
-              mode="chars"
-              trigger="manual"
-              play={ready}
-              delay={0.1}
-              lines={hero.headlineLines}
-              className="text-[clamp(3.7rem,15vw,8rem)] leading-[0.86] font-extrabold tracking-[-0.055em] text-ink lg:text-[clamp(5rem,8.4vw,9.5rem)]"
-            />
-            {/* hand-drawn underline under line 2 */}
-            <svg aria-hidden viewBox="0 0 420 40" className="absolute -bottom-[0.06em] left-[0.04em] h-[0.18em] w-[min(66%,5.2em)] text-[clamp(3.7rem,15vw,8rem)] lg:text-[clamp(5rem,8.4vw,9.5rem)]" preserveAspectRatio="none">
-              <motion.path
-                d="M4 26 C 80 6, 160 34, 240 16 S 380 10, 416 22"
-                fill="none"
-                stroke="#FF9900"
-                strokeWidth="9"
-                strokeLinecap="round"
-                initial={{ pathLength: 0 }}
-                animate={ready ? { pathLength: 1 } : undefined}
-                transition={{ duration: 0.9, ease: EASE, delay: 0.9 }}
-              />
-            </svg>
-          </div>
+          <SplitText
+            as="h1"
+            id="hero-title"
+            mode="chars"
+            trigger="manual"
+            play={ready}
+            delay={0.1}
+            stagger={0.026}
+            lines={hero.headlineLines}
+            // Sized from the column width so the longest line (≈7em wide) always fits on one line.
+            className="text-[length:min(calc((100vw-2rem)/7.2),7rem)] leading-[0.88] font-extrabold tracking-[-0.055em] text-ink sm:text-[length:min(calc((100vw-3rem)/7.2),7rem)] lg:text-[length:calc((min(100vw,1440px)-6rem)*0.0715)]"
+            lineClassName={(i) => (i === 1 ? "w-fit" : undefined)}
+            lineAddon={(i) =>
+              i === 1 ? (
+                // hand-drawn underline under the second line
+                <svg aria-hidden viewBox="0 0 420 40" className="absolute -bottom-[0.1em] left-[0.04em] h-[0.18em] w-[96%]" preserveAspectRatio="none">
+                  <motion.path
+                    d="M4 26 C 80 6, 160 34, 240 16 S 380 10, 416 22"
+                    fill="none"
+                    stroke="#FF9900"
+                    strokeWidth="9"
+                    strokeLinecap="round"
+                    initial={{ pathLength: 0 }}
+                    animate={ready ? { pathLength: 1 } : undefined}
+                    transition={{ duration: 0.9, ease: EASE, delay: 0.9 }}
+                  />
+                </svg>
+              ) : null
+            }
+          />
 
-          <motion.p {...show(0.5)} className="font-display text-xl font-extrabold tracking-tight text-ink md:text-2xl">
-            <span className="marker">{site.tagline}</span>
+          <motion.p {...show(0.45)} className="mt-2 font-display text-[clamp(1.35rem,4.6vw,2rem)] leading-tight font-extrabold tracking-tight text-ink">
+            <span className="marker">{hero.subtitle}</span>
           </motion.p>
 
-          <motion.p {...show(0.6)} className="-mt-3 max-w-xl text-lg text-charcoal md:text-xl">
-            {hero.sub}
+          <motion.p {...show(0.55)} className="max-w-xl text-lg text-charcoal md:text-xl">
+            {hero.description}
           </motion.p>
 
-          <motion.div {...show(0.7)} className="flex w-full flex-col items-start gap-4">
-            <BookingCta />
+          <motion.div {...show(0.65)} className="flex w-full flex-col items-start gap-5">
+            <HeroCtas />
             <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
-              <button type="button" onClick={() => setVideo(true)} aria-haspopup="dialog" className="group flex items-center gap-3 font-display text-lg font-bold text-ink">
-                <span className="relative grid size-12 place-items-center rounded-full border-[2.5px] border-ink bg-ink text-sun transition-transform group-hover:scale-110">
-                  <span className="animate-pulse-ring absolute inset-0 rounded-full border-2 border-tangerine" aria-hidden />
-                  <Play className="ml-0.5 size-5 fill-current" aria-hidden />
-                </span>
-                <span className="underline decoration-tangerine decoration-[3px] underline-offset-[6px] group-hover:decoration-ink">Watch how it works</span>
-              </button>
-              <span className="text-sm font-semibold text-charcoal">✓ No contracts &nbsp; ✓ First cleanup free</span>
+              {site.videoUrl && (
+                <button type="button" onClick={() => setVideo(true)} aria-haspopup="dialog" className="group flex items-center gap-3 font-display text-lg font-bold text-ink">
+                  <span className="relative grid size-12 place-items-center rounded-full border-[2.5px] border-ink bg-ink text-sun transition-transform group-hover:scale-110">
+                    <span className="animate-pulse-ring absolute inset-0 rounded-full border-2 border-tangerine" aria-hidden />
+                    <Play className="ml-0.5 size-5 fill-current" aria-hidden />
+                  </span>
+                  <span className="underline decoration-tangerine decoration-[3px] underline-offset-[6px] group-hover:decoration-ink">Watch how it works</span>
+                </button>
+              )}
+              <span className="text-sm font-semibold text-charcoal">✓ Locally owned &nbsp; ✓ Free quotes &nbsp; ✓ Satisfaction guaranteed</span>
             </div>
           </motion.div>
         </div>
@@ -192,25 +211,26 @@ export function Hero() {
               animate={ready ? { opacity: 1, scale: 1, rotate: -4 } : undefined}
               transition={{ type: "spring", stiffness: 300, damping: 14, delay: 1.2 }}
             >
-              Woof! First scoop&apos;s free 🐾
+              Woof! Your yard, our priority 🐾
             </motion.div>
             <motion.div
-              className="border-hard absolute right-[2%] bottom-[12%] grid size-24 place-items-center rounded-full bg-tangerine text-center font-display leading-none font-extrabold text-ink shadow-hard-sm sm:size-28"
+              className="border-hard absolute right-[2%] bottom-[16%] grid size-24 place-items-center rounded-full bg-tangerine text-center font-display leading-none font-extrabold text-ink shadow-hard-sm sm:size-28"
               initial={{ opacity: 0, scale: 0 }}
               animate={ready ? { opacity: 1, scale: 1, rotate: 10 } : undefined}
               transition={{ type: "spring", stiffness: 260, damping: 12, delay: 1.4 }}
+              aria-hidden
             >
               <span>
-                <span className="block text-xs tracking-widest uppercase">from</span>
-                <span className="block text-3xl sm:text-4xl">{site.priceFrom}</span>
-                <span className="block text-xs tracking-widest uppercase">/visit</span>
+                <span className="block text-[0.7rem] tracking-widest uppercase">Locally</span>
+                <span className="block text-2xl sm:text-3xl">Owned</span>
+                <span className="block text-[0.7rem] tracking-widest uppercase">El Paso</span>
               </span>
             </motion.div>
           </motion.div>
         </motion.div>
       </div>
 
-      <VideoLightbox open={video} onClose={() => setVideo(false)} />
+      {site.videoUrl && <VideoLightbox open={video} onClose={() => setVideo(false)} />}
     </Section>
   );
 }
